@@ -1,5 +1,4 @@
 package com.example.mst;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -8,11 +7,20 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.CallLog;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import java.io.FileOutputStream;
+import java.util.Calendar;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class StorageActivity extends AppCompatActivity {
 
@@ -21,6 +29,7 @@ public class StorageActivity extends AppCompatActivity {
     private TextView internalStorageTextView;
     private TextView externalStorageTextView;
     private TextView callLogTextView;
+    private Button downloadReportButton;
 
     private static final int REQUEST_PERMISSION_CODE = 100;
 
@@ -37,6 +46,18 @@ public class StorageActivity extends AppCompatActivity {
         internalStorageTextView = findViewById(R.id.internal_storage_text_view);
         externalStorageTextView = findViewById(R.id.external_storage_text_view);
         callLogTextView = findViewById(R.id.call_log_text_view);
+
+        // Initialize Button
+        downloadReportButton = findViewById(R.id.download_report_button);
+        downloadReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPhoneReportPDF();
+            }
+
+            private void createPhoneReportPDF() {
+            }
+        });
 
         // Request necessary permissions
         requestPermissions();
@@ -62,10 +83,11 @@ public class StorageActivity extends AppCompatActivity {
         long totalInternalStorage = internalDir.getTotalSpace();
         long freeInternalStorage = internalDir.getFreeSpace();
         long usedInternalStorage = totalInternalStorage - freeInternalStorage;
-        int internalStoragePercentage = (int) ((usedInternalStorage * 100) / totalInternalStorage);
+        double usedInternalStorageGB = (double) usedInternalStorage / (1024 * 1024 * 1024);
+        double totalInternalStorageGB = (double) totalInternalStorage / (1024 * 1024 * 1024);
 
-        internalStorageProgressBar.setProgress(internalStoragePercentage);
-        internalStorageTextView.setText("Internal Storage: " + usedInternalStorage + " / " + totalInternalStorage + " bytes");
+        internalStorageProgressBar.setProgress((int) ((usedInternalStorage * 100) / totalInternalStorage));
+        internalStorageTextView.setText(String.format(Locale.getDefault(), "Internal Storage: %.2f / %.2f GB", usedInternalStorageGB, totalInternalStorageGB));
     }
 
     private void testExternalStorage() {
@@ -74,10 +96,11 @@ public class StorageActivity extends AppCompatActivity {
             long totalExternalStorage = externalDir.getTotalSpace();
             long freeExternalStorage = externalDir.getFreeSpace();
             long usedExternalStorage = totalExternalStorage - freeExternalStorage;
-            int externalStoragePercentage = (int) ((usedExternalStorage * 100) / totalExternalStorage);
+            double usedExternalStorageGB = (double) usedExternalStorage / (1024 * 1024 * 1024);
+            double totalExternalStorageGB = (double) totalExternalStorage / (1024 * 1024 * 1024);
 
-            externalStorageProgressBar.setProgress(externalStoragePercentage);
-            externalStorageTextView.setText("External Storage: " + usedExternalStorage + " / " + totalExternalStorage + " bytes");
+            externalStorageProgressBar.setProgress((int) ((usedExternalStorage * 100) / totalExternalStorage));
+            externalStorageTextView.setText(String.format(Locale.getDefault(), "External Storage: %.2f / %.2f GB", usedExternalStorageGB, totalExternalStorageGB));
         } else {
             externalStorageTextView.setText("External Storage: Not available");
         }
@@ -110,8 +133,12 @@ public class StorageActivity extends AppCompatActivity {
                     break;
             }
 
+            // Format date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            String formattedDate = dateFormat.format(new Date(Long.parseLong(date)));
+
             callLogInfo.append("Number: ").append(number).append(", Type: ").append(callType)
-                    .append(", Date: ").append(date).append(", Duration: ").append(duration).append("\n");
+                    .append(", Date: ").append(formattedDate).append(", Duration: ").append(duration).append("\n");
         }
 
         cursor.close();
@@ -122,6 +149,5 @@ public class StorageActivity extends AppCompatActivity {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
     }
+
 }
-
-

@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".StorageActivity">
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/internal_storage_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:progress="0" />
 
     <TextView
         android:id="@+id/internal_storage_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Internal Storage"
-        android:textSize="18sp" />
+        android:layout_below="@id/internal_storage_progress_bar"
+        android:layout_marginTop="10dp"
+        android:text="Internal Storage: "
+        android:textSize="16sp" />
 
     <ProgressBar
-        android:id="@+id/internal_storage_progress_bar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:id="@+id/external_storage_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
+        android:layout_below="@id/internal_storage_text_view"
+        android:layout_marginTop="20dp"
         android:progress="0" />
 
     <TextView
         android:id="@+id/external_storage_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="External Storage"
-        android:textSize="18sp" />
-
-    <ProgressBar
-        android:id="@+id/external_storage_progress_bar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="0" />
+        android:layout_below="@id/external_storage_progress_bar"
+        android:layout_marginTop="10dp"
+        android:text="External Storage: "
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/call_log_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Call Logs"
-        android:textSize="18sp" />
-</LinearLayout>
+        android:layout_below="@id/external_storage_text_view"
+        android:layout_marginTop="20dp"
+        android:text="Call Logs:"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/download_report_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/call_log_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Download Report" />
+
+</RelativeLayout>
 
 

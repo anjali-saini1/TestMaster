@@ -39,7 +39,6 @@ import java.text.DecimalFormat;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class ThirdActivity extends AppCompatActivity {
-
     TextView deviceNameTextView, modelNoTextView, ramTextView, cpuTextView, kernelTextView,
             batteryTextView, cameraTextView, displayTextView, networkSignalTextView, soundTextView, storageTextView,
             androidVersionTextView, hardwareTextView;

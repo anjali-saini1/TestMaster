@@ -1,23 +1,18 @@
 package com.example.mst;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-
 public class SecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menuactivity_main);
-
         Button mobileInfoButton = findViewById(R.id.Mobile_info);
         Button sensorsButton = findViewById(R.id.button2);
         Button storageButton = findViewById(R.id.storage);
-
-
         mobileInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,8 +38,6 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
     }
 
